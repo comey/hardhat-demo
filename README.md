@@ -97,7 +97,7 @@ In the same directory where you installed **Hardhat** add a `hardhat.config.ts` 
 import {HardhatUserConfig} from 'hardhat/types';
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.7.6',
+    version: '0.8.17',
   }
 };
 export default config;
@@ -223,7 +223,7 @@ pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 
 // This is the main building block for smart contracts.
-contract Token {
+contract MyToken {
     // Some string type variables to identify the token.
     // The `public` modifier makes a variable readable from outside the contract.
     string public name = "My Hardhat Token";
@@ -319,14 +319,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const {deployer, tokenOwner} = await getNamedAccounts();
 
-  await deploy('Token', {
+  await deploy('MyToken', {
     from: deployer,
     args: [tokenOwner],
     log: true,
   });
 };
 export default func;
-func.tags = ['Token'];
+func.tags = ['EECE571G2022W2'];
 
 ```
 
@@ -347,7 +347,7 @@ import 'hardhat-deploy-ethers';
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.7.6',
+    version: '0.8.17',
   },
   namedAccounts: {
     deployer: 0,
@@ -391,14 +391,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) { /
 
   const {deployer, tokenOwner} = await getNamedAccounts(); // Fetch the accounts. These can be configured in hardhat.config.ts as explained above.
 
-  await deploy('Token', { // This will create a deployment called 'Token'. By default it will look for an artifact with the same name. The 'contract' option allows you to use a different artifact.
+  await deploy('MyToken', { // This will create a deployment called 'Token'. By default it will look for an artifact with the same name. The 'contract' option allows you to use a different artifact.
     from: deployer, // Deployer will be performing the deployment transaction.
     args: [tokenOwner], // tokenOwner is the address used as the first argument to the Token contract's constructor.
     log: true, // Display the address and gas used in the console (not when run in test though).
   });
 };
 export default func;
-func.tags = ['Token']; // This sets up a tag so you can execute the script on its own (and its dependencies).
+func.tags = ['EECE571G2022W2']; // This sets up a tag so you can execute the script on its own (and its dependencies).
 
 ```
 
@@ -408,7 +408,7 @@ Not as mentioned in the comment, the name of the deployed contract is set to be 
 
 ```typescript
 await deploy('MyToken_1', { // name of the deployed contract
-  contract: 'Token', // name of the token source
+  contract: 'MyToken', // name of the token source
   from: deployer,
   args: [tokenOwner],
   log: true,
@@ -431,7 +431,7 @@ import {ethers, deployments, getNamedAccounts} from 'hardhat';
 
 describe("Token contract", function() {
   it("Deployment should assign the total supply of tokens to the owner", async function() {
-    await deployments.fixture(["Token"]);
+    await deployments.fixture(["EECE571G2022W2"]);
     const {tokenOwner} = await getNamedAccounts();
     const Token = await ethers.getContract("Token");
     const ownerBalance = await Token.balanceOf(tokenOwner);
@@ -470,7 +470,7 @@ $ npx hardhat test
 This means the test passed sucessfully. Now Let's examine each line.
 
 ```typescript
-await deployments.fixture(["Token"]);
+await deployments.fixture(["EECE571G2022W2"]);
 ```
 
 Remember the deploy script we wrote earlier? This line allow to execute it prior to the test. It also generates an evm_snapshot automatically so if you write many tests, and they all refer to that fixture, the deployment will not be reexecuted. Indeed, behind the scene it does not redeploy it again and again, instead it automatically reverts to a previous state, speeding up your tests significantly!
@@ -484,7 +484,7 @@ This gives you access to the tokenOwner address, the same address that was used 
 
 
 ```typescript
-const Token = await ethers.getContract("Token");
+const Token = await ethers.getContract("MyToken");
 ```
 
 Since we already ran the deploy script, we can easily access the deployed contract by name. This is what this line does, and thanks to `hardhat-deploy-ethers` plugin, you get an ethers contract ready to be invoked. If you needed that contract to be associated to a specific signer, you can pass the address as the extra argument like `const TokenAsOwner = await ethers.getContract('Token', tokenOwner);`
@@ -494,7 +494,7 @@ Since we already ran the deploy script, we can easily access the deployed contra
 const ownerBalance = await Token.balanceOf(tokenOwner);
 ```
 
-Now we can call contract methods on `Token`. To get the balance of the owner account, we can call `balanceOf()`.
+Now we can call contract methods on `MyToken`. To get the balance of the owner account, we can call `balanceOf()`.
 
 ```typescript
 const supply = await Token.totalSupply();
@@ -522,14 +522,14 @@ import {ethers, deployments, getNamedAccounts, getUnnamedAccounts} from 'hardhat
 
 describe("Token contract", function() {
   it("Deployment should assign the total supply of tokens to the owner", async function() {
-    await deployments.fixture(["Token"]);
+    await deployments.fixture(["EECE571G2022W2"]);
     const {tokenOwner} = await getNamedAccounts();
     const users = await getUnnamedAccounts();
-    const TokenAsOwner = await ethers.getContract("Token", tokenOwner);
+    const TokenAsOwner = await ethers.getContract("MyToken", tokenOwner);
     await TokenAsOwner.transfer(users[0], 50);
     expect(await TokenAsOwner.balanceOf(users[0])).to.equal(50);
 
-    const TokenAsUser0 = await ethers.getContract("Token", users[0]);
+    const TokenAsUser0 = await ethers.getContract("MyToken", users[0]);
     await TokenAsUser0.transfer(users[1], 50);
     expect(await TokenAsOwner.balanceOf(users[1])).to.equal(50);
   });
@@ -591,11 +591,11 @@ import {ethers, deployments, getNamedAccounts, getUnnamedAccounts} from 'hardhat
 // we create a setup function that can be called by every test and setup variable for easy to read tests
 async function setup () {
   // it first ensures the deployment is executed and reset (use of evm_snapshot for faster tests)
-  await deployments.fixture(["Token"]);
+  await deployments.fixture(["EECE571G2022W2"]);
 
   // we get an instantiated contract in the form of a ethers.js Contract instance:
   const contracts = {
-    Token: (await ethers.getContract('Token')),
+    Token: (await ethers.getContract('MyToken')),
   };
 
   // we get the tokenOwner
