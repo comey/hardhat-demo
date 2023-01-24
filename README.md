@@ -226,8 +226,8 @@ import "hardhat/console.sol";
 contract MyToken {
     // Some string type variables to identify the token.
     // The `public` modifier makes a variable readable from outside the contract.
-    string public name = "My Hardhat Token";
-    string public symbol = "MBT";
+    string public name = "My Test Token";
+    string public symbol = "MTT";
 
     // The fixed amount of tokens stored in an unsigned integer type variable.
     uint256 public totalSupply = 1000000;
