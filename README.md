@@ -91,7 +91,7 @@ yarn add -D hardhat
 Installing **Hardhat** will install some Ethereum JavaScript dependencies, so be patient.
 :::
 
-In the same directory where you installed **Hardhat** add a `hardhat.config.ts` (we are going to use typescript and the Solidity 0.7.6 compiler)
+In the same directory where you installed **Hardhat** add a `hardhat.config.ts` (we are going to use typescript and the Solidity 0.8.17 compiler)
 
 ```typescript
 import {HardhatUserConfig} from 'hardhat/types';
@@ -133,7 +133,7 @@ import 'hardhat-deploy-ethers';
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.7.6',
+    version: '0.8.17',
   },
   namedAccounts: {
     deployer: 0,
@@ -371,7 +371,7 @@ In your terminal, run `yarn hardhat deploy`. You should see the following output
 
 ```
 Nothing to compile
-deploying "Token" (tx: 0x259d19f33819ec8d3bd994f82912aec6af1a18ec5d74303cfb28d793a10ff683)...: deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3 with 592983 gas
+deploying "MyToken" (tx: 0x259d19f33819ec8d3bd994f82912aec6af1a18ec5d74303cfb28d793a10ff683)...: deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3 with 592983 gas
 Done in 3.66s.
 ```
 
@@ -391,7 +391,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) { /
 
   const {deployer, tokenOwner} = await getNamedAccounts(); // Fetch the accounts. These can be configured in hardhat.config.ts as explained above.
 
-  await deploy('MyToken', { // This will create a deployment called 'Token'. By default it will look for an artifact with the same name. The 'contract' option allows you to use a different artifact.
+  await deploy('MyToken', { // This will create a deployment called 'MyToken'. By default it will look for an artifact with the same name. The 'contract' option allows you to use a different artifact.
     from: deployer, // Deployer will be performing the deployment transaction.
     args: [tokenOwner], // tokenOwner is the address used as the first argument to the Token contract's constructor.
     log: true, // Display the address and gas used in the console (not when run in test though).
@@ -429,11 +429,11 @@ import {expect} from "./chai-setup";
 
 import {ethers, deployments, getNamedAccounts} from 'hardhat';
 
-describe("Token contract", function() {
+describe("MyToken contract", function() {
   it("Deployment should assign the total supply of tokens to the owner", async function() {
     await deployments.fixture(["EECE571G2022W2"]);
     const {tokenOwner} = await getNamedAccounts();
-    const Token = await ethers.getContract("Token");
+    const Token = await ethers.getContract("MyToken");
     const ownerBalance = await Token.balanceOf(tokenOwner);
     const supply = await Token.totalSupply();
     expect(ownerBalance).to.equal(supply);
@@ -487,7 +487,7 @@ This gives you access to the tokenOwner address, the same address that was used 
 const Token = await ethers.getContract("MyToken");
 ```
 
-Since we already ran the deploy script, we can easily access the deployed contract by name. This is what this line does, and thanks to `hardhat-deploy-ethers` plugin, you get an ethers contract ready to be invoked. If you needed that contract to be associated to a specific signer, you can pass the address as the extra argument like `const TokenAsOwner = await ethers.getContract('Token', tokenOwner);`
+Since we already ran the deploy script, we can easily access the deployed contract by name. This is what this line does, and thanks to `hardhat-deploy-ethers` plugin, you get an ethers contract ready to be invoked. If you needed that contract to be associated to a specific signer, you can pass the address as the extra argument like `const TokenAsOwner = await ethers.getContract('MyToken', tokenOwner);`
 
 
 ```typescript
@@ -520,7 +520,7 @@ import {expect} from "./chai-setup";
 
 import {ethers, deployments, getNamedAccounts, getUnnamedAccounts} from 'hardhat';
 
-describe("Token contract", function() {
+describe("MyToken contract", function() {
   it("Deployment should assign the total supply of tokens to the owner", async function() {
     await deployments.fixture(["EECE571G2022W2"]);
     const {tokenOwner} = await getNamedAccounts();
@@ -621,7 +621,7 @@ async function setup () {
 // `describe` receives the name of a section of your test suite, and a callback.
 // The callback must define the tests of that section. This callback can't be
 // an async function.
-describe("Token contract", function() {
+describe("MyToken contract", function() {
 
   // You can nest describe calls to create subsections.
   describe("Deployment", function () {
@@ -799,7 +799,7 @@ As explained in our deployment section you can execute `yarn hardhat deploy` whi
 
 ```
 Nothing to compile
-deploying "Token" (tx: 0x259d19f33819ec8d3bd994f82912aec6af1a18ec5d74303cfb28d793a10ff683)...: deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3 with 592983 gas
+deploying "MyToken" (tx: 0x259d19f33819ec8d3bd994f82912aec6af1a18ec5d74303cfb28d793a10ff683)...: deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3 with 592983 gas
 Done in 3.79s.
 ```
 
@@ -874,7 +874,7 @@ import {node_url, accounts} from './utils/network';
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.7.6',
+    version: '0.8.17',
   },
   networks: {
     rinkeby: {
@@ -916,7 +916,7 @@ If everything went well, you should see something like:
 
 ```
 Nothing to compile
-deploying "Token" (tx: 0xb40879c3162e6a924cfadfc1027c4629dd57ee4ba08a5f8af575be1c751cd515)...: deployed at 0x8bDFEf5f67685725BC0eD9f54f20A2A4d3FEDA98 with 475842 gas
+deploying "MyToken" (tx: 0xb40879c3162e6a924cfadfc1027c4629dd57ee4ba08a5f8af575be1c751cd515)...: deployed at 0x8bDFEf5f67685725BC0eD9f54f20A2A4d3FEDA98 with 475842 gas
 ```
 
 You will also see that some files have been created in the `deployments/mumbai` folder.
