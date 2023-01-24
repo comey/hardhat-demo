@@ -8,7 +8,7 @@ Most Ethereum libraries and tools are written in JavaScript, and so is **Hardhat
 
 ## Installing Node.js
 
-You can [skip](./creating-a-new-hardhat-project.md) this section if you already have a working Node.js `>=12.0` installation. If not, here's how to install it on Ubuntu, MacOS and Windows.
+You can [skip](./creating-a-new-hardhat-project.md) this section if you already have a working Node.js `>=14.0` installation. If not, here's how to install it on Ubuntu, MacOS and Windows.
 
 
 ### Linux
@@ -20,7 +20,7 @@ Copy and paste these commands in a terminal:
 ```
 sudo apt update
 sudo apt install curl git
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install nodejs
 ```
 
@@ -33,10 +33,10 @@ There are multiple ways of installing Node.js on MacOS. We will be using [Node V
 Copy and paste these commands in a terminal:
 
 ```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.2/install.sh | bash
-nvm install 12
-nvm use 12
-nvm alias default 12
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash
+nvm install 18
+nvm use 18
+nvm alias default 18
 npm install npm --global # Upgrade npm to the latest version
 ```
 
@@ -54,12 +54,12 @@ If your version of Node.js is older than `12.0` follow the instructions below to
 
 ### MacOS
 
-You can change your Node.js version using [nvm](http://github.com/creationix/nvm). To upgrade to Node.js `12.x` run these in a terminal:
+You can change your Node.js version using [nvm](http://github.com/creationix/nvm). To upgrade to Node.js `18.x` run these in a terminal:
 
 ```
-nvm install 12
-nvm use 12
-nvm alias default 12
+nvm install 18
+nvm use 18
+nvm alias default 18
 npm install npm --global # Upgrade npm to the latest version
 ```
 
