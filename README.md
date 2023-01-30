@@ -954,6 +954,7 @@ Run this command by replacing your address(es) to verify the contract deployed.
 yarn hardhat verify --network polygonMumbai '0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc' '0x1927CE1C1707f19089CA56BA043f4c8e1E06f19F'
 ```
 You should see the following output:
+```
 Nothing to compile
 Successfully submitted source code for contract
 src/MyToken.sol:Token at 0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc
@@ -962,3 +963,4 @@ for verification on the block explorer. Waiting for verification result...
 Successfully verified contract Token on Etherscan.
 https://mumbai.polygonscan.com/address/0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc#code
 Done in 7.67s.
+```
