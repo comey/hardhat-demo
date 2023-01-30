@@ -1,20 +1,27 @@
 import {HardhatUserConfig} from 'hardhat/types';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
-import {node_url, accounts} from './utils/network';
+import '@nomiclabs/hardhat-etherscan';
+import {node_url, accounts, apiKey} from './utils/network';
 const config: HardhatUserConfig = {
   solidity: {
     version: '0.8.17',
   },
   networks: {
-    mumbai: {
+    polygonMumbai: {
       url: node_url('mumbai'),
       accounts: accounts('mumbai'),
     },
   },
+  etherscan: {
+    apiKey: {
+        polygonMumbai: apiKey('mumbai'),
+    }
+  },
   namedAccounts: {
     deployer: 0,
-    tokenOwner: 1,
+    tokenOwner0: 1,
+    tokenOwner1: 2,
   },
   paths: {
     sources: 'src',

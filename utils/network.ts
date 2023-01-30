@@ -43,3 +43,12 @@ export function getMnemonic(networkName?: string): string {
 export function accounts(networkName?: string): {mnemonic: string} {
   return {mnemonic: getMnemonic(networkName)};
 }
+
+export function apiKey(networkName?: string): string {
+  if (networkName) {
+    const apiKey = process.env['APIKEY_' + networkName.toUpperCase()];
+    if (apiKey && apiKey !== '') {
+      return apiKey;
+    }
+  }
+}
