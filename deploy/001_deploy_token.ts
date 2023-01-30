@@ -11,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deploy} = deployments; 
     // Fetch the accounts. These can be configured in hardhat.config.ts as explained above.
     const {deployer, tokenOwner0, tokenOwner1} = await getNamedAccounts(); 
-    console.log(tokenOwner1);
+    console.log('Argument List: '+tokenOwner1);
     // This will create a deployment called 'Token'. 
     // By default it will look for an artifact with the same name. 
     // The 'contract' option allows you to use a different artifact.

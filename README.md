@@ -922,3 +922,43 @@ deploying "MyToken" (tx: 0xb40879c3162e6a924cfadfc1027c4629dd57ee4ba08a5f8af575b
 You will also see that some files have been created in the `deployments/mumbai` folder.
 
 Most notably you'll see `deployments/mumbai/MyToken.json` which contains useful information about your deployed contract, including the address, abi, and the solidity input used to create it.
+
+# 8. Deploying to a live network
+To use this branch, you are recommended to use node version 18.
+Before start, please run
+```
+yarn install
+```
+Now, you are expected to have added the following three varilable in your local `.env` file:
+```
+ETH_NODE_URI_MUMBAI='<YOUR INFURA URL TO MUMBAI>'
+MNEMONIC_MUMBAI='<YOUR TWELVE MNEMONIC WORDS SEPARATED BY SPACES>'
+APIKEY_MUMBAI='<YOUR APIKEY GET BY REGISTERING AN ACCOUNT IN https://polygonscan.com/>'
+```
+Run the following three commands to compile, test, and deploy the deployed smart contract. The mumbai testnet etherscan is here: https://mumbai.polygonscan.com/.
+```
+yarn hardhat compile
+yarn hardhat test
+yarn hardhat depoly --network polygonMumbai
+```
+You should see the following output:
+
+```
+Nothing to compile
+Argument List: 0x1927CE1C1707f19089CA56BA043f4c8e1E06f19F
+deploying "MyToken" (tx: 0x49a8d52b0f475e3107233d5259b441b9f587441c66b4ade87f0d97f98e277bd8)...: deployed at 0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc with 743231 gas
+Done in 7.72s.
+```
+Run this command by replacing your address(es) to verify the contract deployed.
+```
+yarn hardhat verify --network polygonMumbai '0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc' '0x1927CE1C1707f19089CA56BA043f4c8e1E06f19F'
+```
+You should see the following output:
+Nothing to compile
+Successfully submitted source code for contract
+src/MyToken.sol:Token at 0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract Token on Etherscan.
+https://mumbai.polygonscan.com/address/0xbCdEE6B7f2c42da68f3BaE05930E6fea4f4738fc#code
+Done in 7.67s.
